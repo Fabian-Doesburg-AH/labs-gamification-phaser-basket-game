@@ -10,6 +10,15 @@ export function createGame(parent: HTMLElement): Phaser.Game {
         height: GAME_CONFIG.HEIGHT,
         backgroundColor: GAME_CONFIG.BACKGROUND_COLOR,
         parent,
+        scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: GAME_CONFIG.WIDTH,
+            height: GAME_CONFIG.HEIGHT,
+        },
+        input: {
+            activePointers: 1,
+        },
         physics: {
             default: 'arcade',
             arcade: {

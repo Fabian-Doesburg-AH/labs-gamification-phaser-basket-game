@@ -23,7 +23,6 @@ export abstract class GameObject {
 
     protected createSprite(): Phaser.Physics.Arcade.Sprite {
         if (this.config.textureKey) {
-            // Use a real sprite when an image asset is configured
             const sprite = this.scene.physics.add.sprite(
                 this.config.x,
                 this.config.y,
@@ -34,7 +33,6 @@ export abstract class GameObject {
             return sprite;
         }
 
-        // Fallback: plain coloured rectangle with a physics body
         const rect = this.scene.add.rectangle(
             this.config.x,
             this.config.y,

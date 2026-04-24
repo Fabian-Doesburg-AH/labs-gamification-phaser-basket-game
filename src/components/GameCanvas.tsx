@@ -20,10 +20,13 @@ export function GameCanvas() {
         <div
             ref={containerRef}
             style={{
-                width: 800,
-                height: 600,
-                margin: '0 auto',
+                width: '100vw',
+                height: '100vh',
+                maxWidth: '100%',
+                margin: 0,
                 display: 'block',
+                touchAction: 'none',
+                overflow: 'hidden',
             }}
         />
     );

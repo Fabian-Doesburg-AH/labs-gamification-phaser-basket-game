@@ -98,6 +98,9 @@ export class GameScene extends Phaser.Scene {
         this.input.keyboard?.once('keydown-SPACE', () => {
             this.scene.restart();
         });
+        this.input.once('pointerdown', () => {
+            this.scene.restart();
+        });
     }
 }
 
