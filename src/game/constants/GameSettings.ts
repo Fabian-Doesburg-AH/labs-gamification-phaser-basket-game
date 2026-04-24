@@ -7,10 +7,10 @@ export const GAME_SETTINGS = {
 
     /** Difficulty scaling — tweak these to change how fast the game ramps up */
     DIFFICULTY: {
-        SCALE_INTERVAL:    10000,
+        SCALE_INTERVAL:    6666,
         SPAWN_RATE_SCALE:  0.80,
         SPAWN_RATE_MIN:    300,
-        FALL_SPEED_SCALE:  1.10,
-        FALL_SPEED_MAX:    600,
+        FALL_SPEED_SCALE:  1.15,
+        FALL_SPEED_MAX:    700,
     },
 } as const;
