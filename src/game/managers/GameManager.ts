@@ -50,6 +50,11 @@ export class GameManager {
             else if (direction === 'right') this.basket.moveRight();
             else this.basket.stop();
         });
+
+        this.inputManager.onDrag((x) => {
+            if (!this.isGameActive) return;
+            this.basket.setTargetX(x);
+        });
     }
 
     private setupCollisions(): void {

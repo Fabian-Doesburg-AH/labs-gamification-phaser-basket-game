@@ -1,13 +1,14 @@
 import * as Phaser from 'phaser';
 
 export type InputCallback = (direction: 'left' | 'right' | 'stop') => void;
+export type DragCallback = (x: number) => void;
 
 export class InputManager {
     private scene: Phaser.Scene;
     private keys: { [key: string]: Phaser.Input.Keyboard.Key };
     private callback: InputCallback | null = null;
+    private dragCallback: DragCallback | null = null;
     private lastDirection: 'left' | 'right' | 'stop' = 'stop';
-    private touchDirection: 'left' | 'right' | 'stop' = 'stop';
 
     constructor(scene: Phaser.Scene) {
         this.scene = scene;
@@ -21,33 +22,24 @@ export class InputManager {
         this.setupTouch();
     }
 
-    private static readonly DRAG_THRESHOLD = 2;
-    private lastPointerX: number | null = null;
-
     private setupTouch(): void {
-        this.scene.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-            this.lastPointerX = pointer.x;
-            this.touchDirection = 'stop';
-        });
-
-        this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-            if (!pointer.isDown || this.lastPointerX === null) return;
-            const dx = pointer.x - this.lastPointerX;
-            if (Math.abs(dx) < InputManager.DRAG_THRESHOLD) return;
-            this.touchDirection = dx > 0 ? 'right' : 'left';
-            this.lastPointerX = pointer.x;
-        });
-
-        const endDrag = () => {
-            this.lastPointerX = null;
-            this.touchDirection = 'stop';
+        const emit = (pointer: Phaser.Input.Pointer) => {
+            if (!pointer.isDown) return;
+            // pointer.x is already in game-space (accounts for Scale.FIT).
+            this.dragCallback?.(pointer.x);
         };
-        this.scene.input.on('pointerup', endDrag);
-        this.scene.input.on('pointerupoutside', endDrag);
+
+        this.scene.input.on('pointerdown', emit);
+        this.scene.input.on('pointermove', emit);
     }
 
     public onInput(callback: InputCallback): void {
         this.callback = callback;
+    }
+
+    /** Fires the absolute game-space X of the pointer while dragging. */
+    public onDrag(callback: DragCallback): void {
+        this.dragCallback = callback;
     }
 
     public update(): void {
@@ -57,17 +49,12 @@ export class InputManager {
             direction = 'left';
         } else if (this.keys.right.isDown || this.keys.d.isDown) {
             direction = 'right';
-        } else if (this.touchDirection !== 'stop') {
-            direction = this.touchDirection;
         }
 
         if (direction !== this.lastDirection) {
             this.lastDirection = direction;
-            if (this.callback) {
-                this.callback(direction);
-            }
+            this.callback?.(direction);
         }
-        this.touchDirection = 'stop';
     }
 
     public destroy(): void {
