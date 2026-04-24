@@ -1,3 +1,5 @@
+import fruitImg from '../../assets/fruit.png';
+import basketImg from '../../assets/basket.png';
 /**
  * Visual asset configuration.
  *
@@ -11,11 +13,11 @@
 export const ASSET_CONFIG = {
     FRUIT: {
         textureKey: 'fruit',
-        imagePath:  'src/assets/fruit.png',
+        imagePath: fruitImg,
     },
     BASKET: {
         textureKey: 'basket',
-        imagePath:  'src/assets/basket.png',
+        imagePath:  basketImg,
     },
 };
 
