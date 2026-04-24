@@ -35,8 +35,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     public create(): void {
+        this.gameOverText = undefined;
         this.physics.world.setBounds(0, 0, GAME_CONFIG.WIDTH, GAME_CONFIG.HEIGHT);
-
         this.basket = new Basket(this, GAME_SETTINGS.BASKET_SPEED);
         this.objectPool = new ObjectPool(this, 20);
         this.inputManager = new InputManager(this);
