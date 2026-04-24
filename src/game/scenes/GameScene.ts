@@ -86,7 +86,7 @@ export class GameScene extends Phaser.Scene {
             .text(
                 GAME_CONFIG.WIDTH / 2,
                 GAME_CONFIG.HEIGHT / 2,
-                `Game Over\nScore: ${finalScore}\nPress SPACE to restart`,
+                `Game Over\nScore: ${finalScore}\nPRESS or SPACE to restart`,
                 {
                     fontSize: TEXT_CONFIG.GAME_OVER_FONT_SIZE,
                     color: TEXT_CONFIG.GAME_OVER_COLOR,
